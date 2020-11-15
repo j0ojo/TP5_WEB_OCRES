@@ -11,7 +11,16 @@ const db = [{
 
     //NEW ROUTES
 
-router.get('/', function(req, res, next) {
+    //GET localhost:3000/movies/
+    router.get('/', (req, res) => {
+
+        res.status(200).json({db});
+        res.send('Movies list');
+        res.send(db);
+      });
+
+    //GET localhost:3000/movies/:id 
+router.get('/:id', function(req, res, next) {
     const {id} = req.params;
     const db=_.find(db,["id",id]);
      
@@ -21,32 +30,47 @@ router.get('/', function(req, res, next) {
     });
   });
   
-  router.post('/',function(req,res,next){
+
+  //PUT localhost:3000/movies/
+  router.put('/',(req,res)=>{
+      const {Title}=req.body;
+      const id=_.uniqueId();
+
+      users.push({Title,id});
+
+      res.json({
+          message: `Just added ${id}`,
+          Title:{Title,id}
+      });
+  });
+  
+  //POST localhost:3000/movies/:id
+
+  router.post('/:id',(req,res)=>{
     
-    const temp=req.body;
-    db.push(temp);
-    res.send( 'post route ${temp.Title} added to the database'); //POSTMAN
+   
+    const {id} = req.params;
+    const {Title} = req.body;
+    const user= _.find(users,["id",id]);
+    
+    userToUpdate.Title=Title;
+    res.json({
+        message:`Just update ${id} with ${Title}`
+    });
     
   });
+  //DELETE localhost:3000/movies/:id
 
-
-app.get((req, res) => { 
-
-    res.json({
-        req:req.method,
-        data: "This is GET"
-    })
-});
-
-app.put('/test',(req, res) => { 
+router.delete('/:id',(req,res)=>{
+    const {id}=req.params;
+    _.remove(users,["id",id]);
 
     res.json({
-        req: req.method,
-        data: "This is PUT"
-    })
+        message : `Just removed ${id}`
+    });
 });
 
-const db = {
-    id : [
-    {"Title": "Guardians of the Galaxy Vol. 2"},
-]};
+
+
+
+
