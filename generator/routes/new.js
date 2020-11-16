@@ -1,6 +1,7 @@
 import express from 'express';
 
 var express = require('express');
+<<<<<<< HEAD
 const axios = require('axios').default;
 const _ = require('lodash');
 var router = express.Router();
@@ -30,12 +31,24 @@ const db = [{
     Website:"N/A",
     Response:"True"},
     ];
+=======
+var router = express.Router();
+
+const db = [{
+    Title: "Guardians of the Galaxy Vol. 2",
+    id : "0"
+    }];
+>>>>>>> 500e990dc8f8bf676786e86460fc1c6d6e79990d
 
 
     //NEW ROUTES
 
     //GET localhost:3000/movies/
+<<<<<<< HEAD
     router.get('/', (req, res,next) => {
+=======
+    router.get('/', (req, res) => {
+>>>>>>> 500e990dc8f8bf676786e86460fc1c6d6e79990d
 
         res.status(200).json({db});
         res.send('Movies list');
@@ -55,6 +68,7 @@ router.get('/:id', function(req, res, next) {
   
 
   //PUT localhost:3000/movies/
+<<<<<<< HEAD
   router.put('/',(req,res,next)=>{
 
       axios.get('http://www.omdbapi.com/', {
@@ -70,10 +84,19 @@ router.get('/:id', function(req, res, next) {
 
       db.push({Title,id});
       res.send(db);
+=======
+  router.put('/',(req,res)=>{
+      const {Title}=req.body;
+      const id=_.uniqueId();
+
+      users.push({Title,id});
+
+>>>>>>> 500e990dc8f8bf676786e86460fc1c6d6e79990d
       res.json({
           message: `Just added ${id}`,
           Title:{Title,id}
       });
+<<<<<<< HEAD
 
       })
       .catch(function (error) {
@@ -84,10 +107,13 @@ router.get('/:id', function(req, res, next) {
       });  
 
   
+=======
+>>>>>>> 500e990dc8f8bf676786e86460fc1c6d6e79990d
   });
   
   //POST localhost:3000/movies/:id
 
+<<<<<<< HEAD
   router.post('/:id',(req,res,next)=>{
     
     axios.post('http://www.omdbapi.com/', {
@@ -110,13 +136,32 @@ router.get('/:id', function(req, res, next) {
       console.log(error);
     });
 
+=======
+  router.post('/:id',(req,res)=>{
+    
+   
+    const {id} = req.params;
+    const {Title} = req.body;
+    const user= _.find(users,["id",id]);
+    
+    userToUpdate.Title=Title;
+    res.json({
+        message:`Just update ${id} with ${Title}`
+    });
+>>>>>>> 500e990dc8f8bf676786e86460fc1c6d6e79990d
     
   });
   //DELETE localhost:3000/movies/:id
 
+<<<<<<< HEAD
 router.delete('/:id',(req,res,next)=>{
     const {id}=req.params;
     _.remove(db,["id",id]);
+=======
+router.delete('/:id',(req,res)=>{
+    const {id}=req.params;
+    _.remove(users,["id",id]);
+>>>>>>> 500e990dc8f8bf676786e86460fc1c6d6e79990d
 
     res.json({
         message : `Just removed ${id}`
